@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section HeadScripts
+{
+    <script src="~/Scripts/scripts/app/Module.js"></script>
+    <script src="~/Scripts/scripts/app/Controllers.js"></script>
+    <script src="~/Scripts/scripts/app/Service.js"></script>
+}
+
+
+  
+    <div ng-app="linkModule">
+        <div  ng-controller="linkController as alias">
+            <section>
+                
+                    <div style="margin-left:20%; float: left">   
+                        <h1>Links of Ivan Kupranets</h1>  
+                        <br>
+                        <label form="linkFilter">Search</label>
+                        <input type="text" ng-model="alias.linkFilter" class="form-control"><br>
+                        <input style="width:300px" ng-click="alias.isAddEnabled = true" type="button" value="Add" class="btn">
+                    </div>
+                <div style="float:right;  margin-right: 200px;  margin-top: 50px;">
+                    <div ng-show="alias.isAddEnabled">
+                        <input placeholder="Input link title" ng-model="alias.newLinkTitle" ng-hide="!alias.isAddEnabled" type="text" required>
+                        <button ng-click="alias.addNewLink()" ng-disabled="!alias.disableAddButton()" class="btn">Save</button>
+                        <button ng-click="alias.isAddEnabled = false" ng-hide="!alias.isAddEnabled" class="btn">Cancel</button>
+                    </div><br>
+                    <div ng-show="alias.isEditEnabled" style="margin-top: 10px;">
+                        <input ng-model="alias.editLinkTitle" type="text" required>
+                        <button ng-click="alias.updateLink(alias.currentEditedLink, alias.editLinkTitle)" ng-disabled="!alias.disableEditButton()" ng-hide="!alias.isEditEnabled" class="btn">Update</button>
+                        <button ng-click="alias.isEditEnabled = false" ng-hide="!alias.isEditEnabled" class="btn">Cancel</button>
+                    </div>
+                </div><br>                  
+                    
+
+                    <table class="table-bordered" align="center" width="500" height="200" style=" clear: both; margin-top: 200px;" >
+                        <thead>
+                            <tr>
+                                <td align="center"><h3>LinkTitle</h3></td>
+                                <td align="center"><h3>CurrentDate</h3></td>
+                                <td align="center"><h3>Edit</h3></td>
+                                <td align="center"><h3>Remoove</h3></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="link in alias.links | orderBy : 'LinkTitle' | filter : alias.linkFilter ">
+                                <td align="center"><a>{{link.LinkTitle}}</a></td>
+                                <td align="center">{{link.CurrentDate | date : "medium" }}</td>
+                                <td align="center"><button ng-click="alias.enableEdit(link)" class="btn btn-danger btn-xs"><i class="glyphicon  glyphicon-edit"></i></button></td>
+                                <td ng-click="alias.remooveLink(link)" align="center"><button class="btn btn-xs btn-info"><i class="glyphicon  glyphicon-remove"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </section>
+        </div>
+</div>
+
+
+           
+        
+  
+
+
